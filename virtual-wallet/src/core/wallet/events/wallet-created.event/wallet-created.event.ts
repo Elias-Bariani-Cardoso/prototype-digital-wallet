@@ -1,1 +1,6 @@
-export class WalletCreatedEvent {}
+export class WalletCreatedEvent {
+  constructor(
+    public readonly walletId: string,
+    public readonly userId: string,
+  ) {}
+}

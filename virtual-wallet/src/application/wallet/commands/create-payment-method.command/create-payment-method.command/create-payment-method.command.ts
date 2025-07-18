@@ -1,0 +1,8 @@
+import { PaymentMethodType } from "src/core/wallet/entities/payment-method.entity/payment-method.entity";
+
+export class CreatePaymentMethodCommand {
+  constructor(
+    public readonly type: PaymentMethodType,
+    public readonly data: Record<string, any>,
+  ) {}
+}
