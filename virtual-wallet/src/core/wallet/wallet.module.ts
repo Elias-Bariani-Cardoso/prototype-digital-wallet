@@ -1,10 +1,14 @@
 import { Module } from '@nestjs/common';
-import { WalletController } from 'src/infra/http/wallet/wallet.controller';
+import { WalletController } from 'src/infra/http/wallet/controllers/wallet.controller/wallet.controller';
+import { PaymentMethodController } from 'src/infra/http/wallet/controllers/payment-method.controller/payment-method.controller';
 
 // Handler
-import { CreatePaymentMethodHandler } from 'src/application/wallet/handlers/create-payment-method.handler/create-payment-method.handler/create-payment-method.handler';
+import { AddPaymentMethodHandler } from 'src/application/wallet/handlers/add-payment-method.handler/add-payment-method.handler';
+
 // Service (Strategy Processor)
 import { PaymentMethodProcessorService } from 'src/core/wallet/services/payment-method-processor.service/payment-method-processor.service';
+import { PaymentMethodStrategyResolverService } from './services/payment-method-strategy-resolver.service/payment-method-strategy-resolver.service';
+
 
 // Strategies
 import { PixStrategy } from './strategies/pix.strategy/pix.strategy';
@@ -14,11 +18,15 @@ import { OpenBankingStrategy } from './strategies/open-banking.strategy/open-ban
 import { CreateWalletHandler } from 'src/application/wallet/handlers/create-wallet.handler/create-wallet.handler';
 
 @Module({
-  controllers: [WalletController],
+  controllers: [
+    WalletController,
+    PaymentMethodController,
+  ],
   providers: [
     CreateWalletHandler,
-    CreatePaymentMethodHandler,
+    AddPaymentMethodHandler,
     PaymentMethodProcessorService,
+    PaymentMethodStrategyResolverService,
     PixStrategy,
     CreditCardStrategy,
     BoletoStrategy,

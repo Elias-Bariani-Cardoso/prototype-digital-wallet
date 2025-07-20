@@ -2,7 +2,7 @@ import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { PaymentMethodType } from 'src/core/wallet/entities/payment-method.entity/payment-method.entity';
 
-export class CreatePaymentMethodDto {
+export class AddPaymentMethodDto {
   @ApiProperty({ enum: PaymentMethodType })
   @IsEnum(PaymentMethodType)
   type: PaymentMethodType;
