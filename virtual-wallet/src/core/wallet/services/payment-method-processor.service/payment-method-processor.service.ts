@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { PaymentMethodType } from '../../entities/payment-method.entity/payment-method.entity';
 import { PaymentMethodStrategyResolverService } from '../payment-method-strategy-resolver.service/payment-method-strategy-resolver.service';
+import { PaymentMethod } from '../../entities/payment-method.entity/payment-method.entity';
 
 @Injectable()
 export class PaymentMethodProcessorService {
@@ -8,10 +8,10 @@ export class PaymentMethodProcessorService {
     private readonly strategyResolver: PaymentMethodStrategyResolverService,
   ) {}
 
-  async handle(type: PaymentMethodType, data: any): Promise<void> {
-    const strategy = this.strategyResolver.resolve(type);
-    strategy.validate(data);
-    await strategy.process(data);
+  async handle(paymentMethod: PaymentMethod): Promise<void> {
+    const strategy = this.strategyResolver.resolve(paymentMethod.type);
+    strategy.validate(paymentMethod.details);
+    await strategy.process(paymentMethod.details);
   }
 }
 
