@@ -22,19 +22,19 @@ export class PaymentMethodController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Adicionar método de pagamento' })
-  @ApiResponse({ status: 201, description: 'Método de pagamento criado com sucesso' })
+  @ApiResponse({ status: 201, description: 'Método de pagamento adicionado com sucesso' })
   @ApiResponse({ status: 400, description: 'Dados inválidos' })
   @ApiBody({ type: AddPaymentMethodDto })
   async create(@Body() dto: AddPaymentMethodDto) {
     try {
-      const command = new AddPaymentMethodCommand(dto.type, dto.data);
+      const command = new AddPaymentMethodCommand(dto.walletId, dto.type, dto.data);
       await this.createPaymentMethodHandler.execute(command);
       return {
-        message: 'Método de pagamento criado com sucesso',
+        message: 'Método de pagamento adicionado com sucesso',
       };
     } catch (error) {
       throw new BadRequestException(
-        'Erro ao criar método de pagamento. ' + (error?.message || ''),
+        'Erro ao adicionar método de pagamento. ' + (error?.message || ''),
       );
     }
   }

@@ -22,8 +22,15 @@ export class Wallet {
   }
 
   addPaymentMethod(method: PaymentMethod) {
-    this.paymentMethods.push(method);
+  const exists = this.paymentMethods.some(
+    (m) => m.type === method.type && JSON.stringify(m.details) === JSON.stringify(method.details),
+  );
+  if (exists) {
+    throw new Error('Método de pagamento já adicionado à carteira');
   }
+  this.paymentMethods.push(method);
+  }
+
 
   getPaymentMethods(): PaymentMethod[] {
     return this.paymentMethods;
